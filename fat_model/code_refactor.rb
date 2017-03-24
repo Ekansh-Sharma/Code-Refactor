@@ -1,27 +1,34 @@
 class Order < ActiveRecord::Base
   delegate :to_xml, :to_json, :to_csv, :to_pdf, to: :converter
-
-  def self.find_purchased
-  # ...
-  end
-  def self.find_waiting_for_review
-  # ...
-  end
-  def self.find_waiting_for_sign_off
-  # ...
-  end
-  def self.find_waiting_for_sign_off
-  # ...
-  end
-  def self.advanced_search(fields, options = {})
-  # ...
-  end
-  def self.simple_search(terms)
-  # ...
-  end
+  extend OrderStateFinder
+  extend OrderSearcher
 
   def converter
     OrderConverter.new(self)
+  end
+end
+
+module OrderStateFinder
+  def find_purchased
+  # ...
+  end
+  def find_waiting_for_review
+  # ...
+  end
+  def find_waiting_for_sign_off
+  # ...
+  end
+  def find_waiting_for_sign_off
+  # ...
+  end
+end
+
+module OrderSearcher
+  def advanced_search(fields, options = {})
+  # ...
+  end
+  def simple_search(terms)
+  # ...
   end
 end
 
